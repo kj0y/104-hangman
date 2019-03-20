@@ -6,6 +6,7 @@ module Hangman
       @chances = 5
       @wrong_tries = 0
       @guess = ""
+      @bad_guess = ""
       @word = Dictionary.random
     end
 
@@ -19,8 +20,15 @@ module Hangman
         char = gets.chomp
         Graphics.clear_screen
 
-        if word.include? char
-          if guess.include? char
+      if char == ""
+        puts "Please enter a letter."
+
+      elsif char !~ /\A[a-zA-Z'-]*\z/
+        puts "Please enter a letter. Special characters and numbers are not allowed."
+      
+      elsif word.include? char
+
+        if guess.include? char
             puts "You already entered '#{char}'. Yes, it is still correct.. 🙄"
             puts 'Try again: ' + Graphics.obfuscate_word(word, guess)
           else
@@ -29,15 +37,30 @@ module Hangman
 
             puts 'Whoop Whoop!! ' + placeholder
           end
-
           unless placeholder.include? Graphics::OBFUSCATION_CHAR
             puts Graphics::ALIVE
+            Graphics.clear_screen
+            Time.new
+            sleep 1.2
+            puts Graphics::STAYINALIVE
+            Graphics.clear_screen
+            Time.new
+            sleep 1.2
+            puts Graphics::STILLALIVE
+            Graphics.clear_screen
+            Time.new
+            sleep 1.2
             puts "\n\nWELL DONE!! YOU SURVIVED"
             break
           end
         else
-          puts "OH NOES! The word doesn't contain '#{char}'"
-          @wrong_tries = @wrong_tries + 1
+          if @bad_guess.include? char
+            puts "You've already guessed that, and it's still incorrect. Please try a new letter."
+          else
+            @bad_guess << char
+            puts "OH NOES! The word doesn't contain '#{char}'"
+            @wrong_tries = @wrong_tries + 1
+          end
 
           if wrong_tries == chances
             puts Graphics::DEAD

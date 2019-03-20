@@ -1,9 +1,7 @@
 module Hangman
   module Dictionary
-    WORDS = %w{
-      banana avocado apple chocolate froyo peanut
-    }
-
+    WORDS = IO.readlines("linuxwords").select{|word| word.length > 5}
+   
     def self.random
       WORDS.sample
     end
