@@ -3,7 +3,7 @@ module Hangman
     attr_reader :chances, :word, :wrong_tries, :guess
 
     def initialize
-      @chances = 5
+      @chances = 26 #change this back to 5
       @wrong_tries = 0
       @guess = ""
       @bad_guess = ""
@@ -12,7 +12,9 @@ module Hangman
 
     def play
       Graphics.clear_screen
-      puts 'Guess this word: ' + Graphics.obfuscate_word(word, '')
+      puts 'Guess this word: ' + Graphics.obfuscate_word(word,'')
+      puts word #delete this!!!
+       
 
       while true
         print "[#{chances - wrong_tries} chances left]: "
@@ -23,7 +25,7 @@ module Hangman
       if char == ""
         puts "Please enter a letter."
 
-      elsif char !~ /\A[a-zA-Z'-]*\z/
+      elsif char !~/\A[a-zA-Z'-]*\z/
         puts "Please enter a letter. Special characters and numbers are not allowed."
       
       elsif word.include? char
@@ -38,18 +40,16 @@ module Hangman
             puts 'Whoop Whoop!! ' + placeholder
           end
           unless placeholder.include? Graphics::OBFUSCATION_CHAR
+            Graphics.clear_screen
             puts Graphics::ALIVE
+            sleep 1
             Graphics.clear_screen
-            Time.new
-            sleep 1.2
             puts Graphics::STAYINALIVE
+            sleep 1
             Graphics.clear_screen
-            Time.new
-            sleep 1.2
             puts Graphics::STILLALIVE
+            sleep 1
             Graphics.clear_screen
-            Time.new
-            sleep 1.2
             puts "\n\nWELL DONE!! YOU SURVIVED"
             break
           end
@@ -61,7 +61,6 @@ module Hangman
             puts "OH NOES! The word doesn't contain '#{char}'"
             @wrong_tries = @wrong_tries + 1
           end
-
           if wrong_tries == chances
             puts Graphics::DEAD
             puts "\nARRRRGGGGGGGGGGG YOU LOST! 😭  😵  ☠️"
@@ -71,6 +70,10 @@ module Hangman
           end
         end
       end
+        rescue Interrupt
+        Graphics.clear_screen
+        puts "Goodbye, cruel world!"
+    
     end
   end
 end

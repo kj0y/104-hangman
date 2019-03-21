@@ -15,24 +15,24 @@ HANG
 
   (•_•)
   <)  )╯
-  /   \
+  /   \\
 
 WIN
   
 
     STAYINALIVE = <<WIN2
 
-  \(•_•)
+  \\(•_•)
   (  (>
-  /   \
+  /   \\
 
 WIN2
 
     STILLALIVE = <<WIN3
 
-    (•_•)
-    <)  )>
-    /   \
+  (•_•)
+  <)  )>
+  /   \\
 
 WIN3
 
@@ -52,7 +52,7 @@ WIN3
         if guessed.include? char
           obfuscated << " #{char} "
         else
-          obfuscated << " #{OBFUSCATION_CHAR}  "
+          obfuscated << " #{OBFUSCATION_CHAR} "
         end
       end
 

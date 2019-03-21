@@ -3,7 +3,7 @@ module Hangman
     WORDS = IO.readlines("linuxwords").select{|word| word.length > 5}
    
     def self.random
-      WORDS.sample
+      WORDS.sample.chomp
     end
   end
 end
